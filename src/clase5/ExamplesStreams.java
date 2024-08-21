@@ -6,27 +6,16 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static src.BuildPerson.buildList;
 
 /**
  * Created by Michael Garcia on 20/08/24
  */
 public class ExamplesStreams
 {
-    static List<Persona> buildList()
-    {
-        return Arrays.asList(
-                new Persona("Martha", 22, "No aplica", 'F'),
-                new Persona("Jose", 28, "Avenida siempre viva 123", 'M'),
-                new Persona("Miguel", 35, "Manzana H casa 33", 'M'),
-                new Persona("Alison", 33, "No aplica", 'F'),
-                new Persona("Andrea", 18, "Carrera 3 123", 'F'),
-                new Persona("Johana", 14, "No aplica", 'F'),
-                new Persona("Manuel", 36, "No aplica", 'M'),
-                new Persona("Martha2", 33, "No aplica", 'F')
-        );
-    }
+
 
     public static void main(String[] args)
     {
@@ -79,25 +68,71 @@ public class ExamplesStreams
 
         List<Worker> workers = new ArrayList<>();
 
-        Function<Worker, Worker> function = (var worker) -> new Worker(worker.getNombre().toUpperCase(), worker.getEdad() + 1,
+        Function<Worker, Worker> applyUpperCaseToName = (var worker) -> new Worker(worker.getNombre().toUpperCase(), worker.getEdad() + 1,
                 worker.getDireccion(), worker.getSexo(), worker.sueldo);
 
-        Predicate<Worker> predicateByAge = (var worker) -> worker.getEdad() > 18;
+        Predicate<Worker> byAgeGreaterThan18 = (var worker) -> worker.getEdad() > 18;
 
         //set workers based on persons
         personas.forEach(persona -> workers.add(new Worker(persona.getNombre(),
                 persona.getEdad(),
                 persona.getDireccion(), persona.getSexo(), 100000)));
 
-        Function<Worker, Worker> functionApplyIncreaseSalary = (var worker) ->
+        Function<Worker, Worker> applyIncreaseSalaryByTwo = (var worker) ->
                 new Worker(worker.getNombre(), worker.getEdad(),
                         worker.getDireccion(), worker.getSexo(), worker.sueldo * 2);
+        //java 8 en adelante
+        List<Worker> collect = workers.stream()
+                .filter(byAgeGreaterThan18)
+                .map(applyUpperCaseToName)
+                .map(applyIncreaseSalaryByTwo)
+                .toList();
 
-        workers.stream()
-                .filter(predicateByAge)
-                .map(function)
-                .map(functionApplyIncreaseSalary)
-                .forEach(System.out::println);
+        //java 7
+        List<Worker> newList = new ArrayList<>();
+        for (Worker worker : workers)
+        {
+            if (worker.getEdad() > 18)
+            {
+                String name = worker.getNombre();
+                worker.setNombre(name.toUpperCase());
+                int edad = worker.getEdad();
+                edad++;
+                worker.setEdad(edad);
+                int nuevoSueldo = worker.sueldo * 2;
+                worker.sueldo = nuevoSueldo;
+                newList.add(worker);
+            }
+        }
+        System.out.println(collect);
+        System.out.println(newList);
+        //.forEach(System.out::println);
+
+
+        List<String> nombres = new ArrayList<>();
+        Function<Persona, String> getNames = persona -> persona.getNombre();
+
+        personas.stream()
+                .map(getNames)
+                .filter(personName -> personName.startsWith("M"))
+                .forEach(persona -> nombres.add(persona));
+
+        Consumer<String> consumer = (var name) -> System.out.println("Si se filtra ".concat(name));
+        personas.stream()
+                .map(getNames)
+                .peek(name -> System.out.println("Antes de filtrar, nombre ".concat(name)))
+                .filter(personName -> personName.startsWith("M"))
+                .peek(consumer)
+                .toList();
+
+
+        Stream.of("one", "two", "three", "four")
+                .filter(e -> e.length() > 3)
+                .peek(e -> System.out.println("Filtered value: " + e))
+                .map(String::toUpperCase)
+                .peek(e -> System.out.println("Mapped value: " + e));
+
+//        System.out.println(listNames);
 
     }
 }

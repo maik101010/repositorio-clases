@@ -9,11 +9,21 @@ public class Persona implements Comparable<Persona> {
     private String direccion;
     private char sexo;
 
+    private String ciudad;
+
     public Persona(String nombre, int edad, String direccion, char sexo) {
         this.nombre = nombre;
         this.edad = edad;
         this.direccion = direccion;
         this.sexo = sexo;
+    }
+
+    public Persona(String nombre, int edad, String direccion, char sexo, String ciudad) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.direccion = direccion;
+        this.sexo = sexo;
+        this.ciudad = ciudad;
     }
 
 
@@ -54,6 +64,16 @@ public class Persona implements Comparable<Persona> {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public String getCiudad()
+    {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad)
+    {
+        this.ciudad = ciudad;
     }
 
     @Override
