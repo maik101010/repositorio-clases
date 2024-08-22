@@ -1,36 +1,36 @@
-1- Intentar implementar el compareTo de manera funcional, con expresiones lambda
+Ejercicio 1: Agrupar Trabajadores por Rango Salarial
 
-2- Objetivo: Utilizar Set para realizar operaciones de unión e intersección de dos conjuntos.
+Objetivo: Agrupar las instancias de Worker por su rango salarial (por ejemplo, 0-1000, 1001-2000, etc.) utilizando un Map.
+    Crea una lista de instancias de Worker.
+    Utiliza streams para agrupar los trabajadores en un Map<String, List<Worker>> donde la clave sea el rango salarial y el valor sea una lista de trabajadores en ese rango.
+    Imprime el mapa.
 
-    Crea dos Set<Integer> con algunos elementos.
-    Crea un método que calcule la unión de ambos conjuntos y devuelva un Set<Integer>.
-    Crea otro método que calcule la intersección de ambos conjuntos y devuelva un Set<Integer>.
+Ejercicio 2: Filtrar y Ordenar Trabajadores por Edad
 
-input:
- 1, 2, 3, 4
- 3, 4, 5, 6
+Objetivo: Filtrar a los trabajadores menores de 30 años y luego ordenar a los trabajadores restantes por edad en orden descendente.
+    Crea una lista de instancias de Worker.
+    Utiliza streams para filtrar los trabajadores mayores de 30 años.
+    Ordena los trabajadores filtrados por edad en orden descendente utilizando Comparator.
+    Imprime la lista ordenada.
 
-output:
-1,2,3,4,5,6
+Ejercicio 3: Encontrar al Trabajador más Joven y al más Viejo
 
-3- Objetivo: Utilizar un Map para agrupar estudiantes según su calificación.
+Objetivo: Utilizar streams para encontrar al trabajador más joven y al más viejo en una lista.
+    Crea una lista de instancias de Worker.
+    Utiliza Collectors.maxBy y Collectors.minBy para encontrar al trabajador más joven y al más viejo.
+    Imprime los detalles del trabajador más joven y del más viejo.
 
-    Crea una clase Estudiante con atributos String nombre y int nota.
-    Crea un método que reciba una lista de estudiantes (List<Estudiante>) y devuelva un Map<Integer, List<String>>,
-    donde la clave es la nota y el valor es una lista de nombres de los estudiantes que obtuvieron esa nota.
-    recorre la lista de estudiantes y agrúpalos en el mapa según su calificación.
+Ejercicio 4: Calcular la Edad Promedio por Género
 
-Mostrar en pantalla quieres aprueban con mas de 5 o desaprueban
+Objetivo: Calcular la edad promedio de los trabajadores agrupados por género.
+    Crea una lista de instancias de Worker.
+    Utiliza streams para agrupar a los trabajadores por su género (sexo).
+    Calcula la edad promedio para cada género utilizando Collectors.averagingInt.
+    Imprime los resultados.
 
-4-
-    Crea un método que reciba dos listas de enteros (List<Integer> lista1 y List<Integer> lista2).
-    Convierte las listas en Set<Integer>.
-    Verifica si existe alguna intersección entre los dos conjuntos.
-    El método debe devolver true si hay algún elemento común entre las dos listas, y false si no lo hay.
-input: List<Integer> lista1 = Arrays.asList(1, 2, 3, 4, 5);
-       List<Integer> lista2 = Arrays.asList(5, 6, 7, 8, 9);
-output: true
+Ejercicio 5: Convertir Trabajadores en un Conjunto de Nombres
 
-input: List<Integer> lista3 = Arrays.asList(10, 11, 12);
-       List<Integer> lista4 = Arrays.asList(13, 14, 15);
-output: false
+Objetivo: Convertir la lista de trabajadores en un Set<String> que contenga solo sus nombres, eliminando duplicados.
+    Crea una lista de instancias de Worker.
+    Utiliza streams para mapear cada trabajador a su nombre y recoge los resultados en un Set<String>.
+    Imprime el conjunto de nombres.
