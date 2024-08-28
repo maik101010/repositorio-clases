@@ -1,35 +1,15 @@
-Exercise 2: Filter and Sort Workers by Age
+Simulación de una Carrera de Autos
 
-Objective: Filter out workers under 30 years old and then sort the remaining workers by age in descending order.
+Descripción: Simula una carrera de autos donde cada auto es representado por un thread. Cada auto avanza a una velocidad aleatoria
+(puede ser cualquier numero) y la carrera termina cuando uno de los autos cruza la línea de meta. (1000)
 
-    Create a list of Worker instances.
-    Use streams to filter workers older than 30.
-    Sort the filtered workers by age in descending order using Comparator.
-    Print the sorted list.
+Instrucciones:
 
+    Crea una clase Auto que implementa Runnable.
+    Cada auto debe avanzar a intervalos regulares hasta llegar a la meta.
+    Anuncia el ganador cuando el primer auto cruza la meta.
 
-Exercise 3: Find the Oldest and Youngest Worker
-
-Objective: Use streams to find the oldest and youngest worker in a list.
-
-    Create a list of Worker instances.
-    Use Collectors.maxBy and Collectors.minBy to find the oldest and youngest worker.
-    Print the details of the oldest and youngest worker.
-
-
-Exercise 4: Calculate Average Age by Gender
-
-Objective: Calculate the average age of workers grouped by gender.
-
-    Create a list of Worker instances.
-    Use streams to group workers by their gender (sexo).
-    Calculate the average age for each gender using Collectors.averagingInt.
-    Print the results.
-
-Exercise 5: Convert Workers to a Set of Names
-
-Objective: Convert the list of workers to a Set<String> containing only their names, removing duplicates.
-
-    Create a list of Worker instances.
-    Use streams to map each worker to their name and collect the results into a Set<String>.
-    Print the set of names.
+Puntos clave:
+    Uso de threads para simular el comportamiento simultáneo de los autos.
+    Manejo de condiciones de carrera para determinar el ganador.
+    - Muestre el tiempo recorrido para el carro que gano, en segundos

@@ -7,7 +7,7 @@ public class Main
 {
     public static void main(String[] args) throws InterruptedException
     {
-        Runnable tare1 = () -> {
+        Runnable tarea1 = () -> {
             System.out.println("Comenzando: " + Thread.currentThread().getName());
             int tmp = 0;
             for (int i = 0; i < 100; i++)
@@ -25,7 +25,7 @@ public class Main
             }
         };
 
-        Runnable tare2 = () -> {
+        Runnable tarea2 = () -> {
             System.out.println("Comenzando: " + Thread.currentThread().getName());
             int tmp = 0;
             for (int i = 0; i < 1000; i++)
@@ -40,11 +40,14 @@ public class Main
             }
         };
 
-        Thread thread1 = new Thread(tare1);
+        Thread thread1 = new Thread(tarea1);
         thread1.start();
 
-        Thread thread2 = new Thread(tare2);
+        Thread thread2 = new Thread(tarea2);
         thread2.start();
+
+
+        System.out.println("Terminamos" );
 
     }
 }
