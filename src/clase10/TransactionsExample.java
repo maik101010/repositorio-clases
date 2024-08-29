@@ -20,37 +20,66 @@ public class TransactionsExample
         Connection connection = ConnectionMysql.connection();
 
         String queryInsert = "INSERT INTO clientes (nombre, edad) VALUES (?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(queryInsert);
+
+        connection.setAutoCommit(false);
+        int possibleError = 0;
+        for (ClientEntity client : clientes)
+        {
+            try
+            {
+                preparedStatement.setString(1, client.getNombre());
+                preparedStatement.setInt(2, client.getEdad());
+                preparedStatement.addBatch();
+            } catch (SQLException e)
+            {
+                throw new RuntimeException(e);
+            }
+            if (possibleError == 3)
+                throw new RuntimeException("Ocurrio una exception, la base de datos esta caida!!!!!!!!!!!!");
+            possibleError++;
+        }
+
+        int[] updateCounts = preparedStatement.executeBatch();
+        connection.commit();
+
+        System.out.println("Insertados " + updateCounts.length + " registros.");
+
+        preparedStatement.close();
+        connection.close();
+    }
+
+    public static void insertarMuchosSinRollback(List<ClientEntity> clientes) throws SQLException
+    {
+        Connection connection = ConnectionMysql.connection();
+
+        String queryInsert = "INSERT INTO clientes (nombre, edad) VALUES (?, ?)";
         PreparedStatement statement = connection.prepareStatement(queryInsert);
 
-        connection.setAutoCommit(false); // Desactivar auto-commit para el batch
-        int i = 0;
+        int possibleError = 0;
         for (ClientEntity client : clientes)
         {
             try
             {
                 statement.setString(1, client.getNombre());
                 statement.setInt(2, client.getEdad());
-                statement.addBatch();
+                statement.executeUpdate();
             } catch (SQLException e)
             {
                 throw new RuntimeException(e);
             }
-//            if (i == 3) throw new RuntimeException("Ocurrio una exception");
-            i++;
+            if (possibleError == 3)
+                throw new RuntimeException("Ocurrio una exception, la base de datos esta caida!!!!!!!!!!!!");
+            possibleError++;
         }
-
-        int[] updateCounts = statement.executeBatch();
-        connection.commit();
-
-        System.out.println("Insertados " + updateCounts.length + " registros.");
 
         statement.close();
         connection.close();
     }
 
+
     public static void main(String[] args) throws SQLException
     {
-
         ClientEntity client1 = new ClientEntity(1, "Alice", 25);
         ClientEntity client2 = new ClientEntity(2, "Bob", 30);
         ClientEntity client3 = new ClientEntity(3, "Charlie", 22);
@@ -61,7 +90,7 @@ public class TransactionsExample
         ClientEntity client8 = new ClientEntity(8, "Hannah", 29);
         ClientEntity client9 = new ClientEntity(9, "Ian", 26);
         ClientEntity client10 = new ClientEntity(10, "Jane", 33);
-        List<ClientEntity> clientes = Arrays.asList(client1, client2, client3, client4, client5, client6, client7, client8, client9, client10);
+        List<ClientEntity> clientes = List.of(client1, client2, client3, client4, client5, client6, client7, client8, client9, client10);
         insertarMuchosDatos(clientes);
     }
 }
